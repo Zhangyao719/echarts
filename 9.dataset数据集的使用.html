@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 80px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+        const myCharts = echarts.init(document.querySelector('.echarts'))
+
+        /* 1. 基本格式 */
+        const option1 = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                // 提供一份数据。
+                source: [
+                    ['product',       '2015', '2016', '2017'], // 维度: 此处有4个维度
+                    ['Matcha Latte',   43.3,   85.8,   93.7],  // 每一行都是一个数据项(竖着看 一列一列都对应)
+                    ['Milk Tea',       83.1,   73.4,   55.1],
+                    ['Cheese Cocoa',   86.4,   65.2,   82.5],
+                    ['Walnut Brownie', 72.4,   53.9,   39.1]
+                ]
+            },
+            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+            xAxis: {type: 'category'},
+            // 声明一个 Y 轴，数值轴。
+            yAxis: {},
+            // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+        }
+
+        /* 2.对象数组的格式 */
+        const option2 = {
+            legend: {},
+            tooltip: {
+                trigger: 'axis',
+                position: (pt) => [pt[0], '30%'],
+                // formatter: (params) => {
+                //     console.log('🚀 ~ params', params);
+                // },
+            },
+            dataset: {
+                // 用 dimensions 指定了维度的顺序。直角坐标系中，
+                // 默认把第一个维度映射到 X 轴上，第二个维度映射到 Y 轴上。
+                // 如果不指定 dimensions，也可以通过指定 series.encode
+                dimensions: ['product', '2015', '2016', '2017', '2018', '2019'],
+
+                // 也可以用对象的格式给维度指定name 和type, 如果因为数据为空之类原因导致判断不足够准确时，可以手动设置维度类型。
+                // (大多数情况下，我们并不需要去设置维度类型，因为会自动判断)。
+                /* dimensions: [
+                    {name: 'product', type: 'ordinal'}, // 类目、文本这些 string 类型的数据，如需在数轴上使用，须是 'ordinal' 类型
+                    {name: '2015', type: 'int'}, // 在存储时候会使用 TypedArray，对性能优化有好处。
+                    {name: '2016', type: 'time'}, // 自动解析数据成时间戳
+                    '2017',
+                ], */
+
+                source: [
+                    // 对象形式
+                    // {product: 'Matcha Latte',   '2015': 43.3, '2016': 89.76, '2017': 93.7},
+                    // {product: 'Milk Tea',       '2015': 83.1, '2016': 73.4, '2017': 55.1},
+                    // {product: 'Cheese Cocoa',   '2015': 86.4, '2016': 65.2, '2017': 82.5},
+                    // {product: 'Walnut Brownie', '2015': 72.4, '2016': 53.9, '2017': 39.1}
+                    // 数组形式
+                    ['Matcha Latte',  41.1,   30.4,   65.1, 65.1, 65.1],
+                    ['Milk Tea',      86.5,   92.1,   85.7, 85.7, 85.7],
+                    ['Cheese Cocoa',  24.1,   67.2,   79.5, 79.5, 79.5]
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+            ]
+        };
+
+        /* 3. 把数据集（ dataset ）的行或列映射为系列（series） */
+        option3 = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product',      '2012', '2013', '2014', '2015'],
+                    ['Matcha Latte',  41.1,   30.4,   65.1,   53.3],
+                    ['Milk Tea',      86.5,   92.1,   85.7,   83.1],
+                    ['Cheese Cocoa',  24.1,   67.2,   79.5,   86.4]
+                ]
+            },
+            xAxis: [
+                {type: 'category', gridIndex: 0},
+                {type: 'category', gridIndex: 1}
+            ],
+            yAxis: [
+                {gridIndex: 0},
+                {gridIndex: 1}
+            ],
+            grid: [
+                {bottom: '55%'},
+                {top: '55%'}
+            ],
+            series: [
+                // 这几个系列会在第一个直角坐标系中，每个系列对应到 dataset 的每一行(默认seriesLayoutBy: 'column')。(每一行 代表一组数据(一种颜色))
+                {type: 'bar', seriesLayoutBy: 'row'},
+                {type: 'bar', seriesLayoutBy: 'row'},
+                {type: 'bar', seriesLayoutBy: 'row'},
+                // 这几个系列会在第二个直角坐标系中，每个系列对应到 dataset 的每一列。(每一列 代表一组数据(一种颜色))
+                {type: 'bar', seriesLayoutBy: 'column', xAxisIndex: 1, yAxisIndex: 1}, //AxisIndex 指定哪个轴产生作用(0指第一个图的x/y轴)
+                {type: 'bar', seriesLayoutBy: 'column', xAxisIndex: 1, yAxisIndex: 1},
+                {type: 'bar', seriesLayoutBy: 'column', xAxisIndex: 1, yAxisIndex: 1},
+                {type: 'bar', seriesLayoutBy: 'column', xAxisIndex: 1, yAxisIndex: 1}
+            ]
+        }
+
+        /* 4. 数据到图形的映射（ series.encode ）→ 数据对应表格里的显示位置 */
+        const option4 = {
+            tooltip: {},
+            legend: {},
+            dataset: {
+                source: [
+                    ['score', 'amount',    'product'     ],
+                    [  89.3,    58212,   'Matcha Latte'   ],
+                    [  57.1,    78254,   'Milk Tea'       ],
+                    [  74.4,    41032,   'Cheese Cocoa'   ],
+                    [  50.1,    12755,   'Cheese Brownie' ],
+                    [  89.7,    20145,   'Matcha Cocoa'   ],
+                    [  68.1,    79146,   'Tea'            ],
+                    [  19.6,    91852,   'Orange Juice'   ],
+                    [  10.6,    101852,   'Lemon Juice'   ],
+                    [  32.7,    20112,   'Walnut Brownie' ]
+                ]
+            },
+            xAxis: {},
+            yAxis: {type: 'category'},
+            series: [
+                // 上述传入了3个纬度的数据, 但是我们可以在series中, 单独定义当前某一个图形(不一定非要全部展示), 为期配置dataset中想要展示的数据
+                {
+                    type: 'bar',
+                    encode: {
+                        // 4.1 公共配置:
+                        // 维度: "product" 和 维度: "score" 的值在 tooltip(柱条hover) 中显示
+                        tooltip: ['product', 'score'],
+
+                        // 使用 “维度 1” 和 “维度 3” 的维度名连起来作为系列名(legend)。（有时候名字比较长，这可以避免在 series.name 重复输入这些名字）
+                        seriesName: [1, 2],
+
+                        // 表示使用 “维度2” 中的值作为 id。这在使用 setOption 动态更新数据时有用处，可以使新老数据用 id 对应起来，从而能够产生合适的数据更新动画。
+                        itemId: 2,
+
+                        // 指定数据项的名称使用 “维度3” 在饼图等图表中有用，可以使这个名字显示在图例（legend）中。
+                        itemName: 3,
+
+                        // 4.2.1 直角坐标系（grid/cartesian）特有的属性：
+                        // x: 'amount', // 将 维度名 - "amount" 列映射到 X 轴。
+                        // y: 'product', // 将 维度名 - "product" 列映射到 Y 轴。
+                        // 也可以是维度序号(从0开始)
+                        y: 'product',
+                        x: 1,
+
+                        // 4.3 对于一些没有坐标系的图表，例如饼图、漏斗图等，可以是：
+                        // value: 3
+                    }
+                },
+            ]
+        };
+
+        myCharts.setOption(option4)
+
+        const array = [
+        {
+            test_id: 2021010100281397,
+            device_id: 53,
+            time_stamp: 1614583406,
+            cpu: 12.5,
+            mem_dalvik: 15,
+            men_total: 13.2,
+            men_native: 14,
+            net_in: 16,
+            net_out: 17,
+            fps: 24,
+        },
+        {
+            test_id: 2021010100281397,
+            device_id: 53,
+            time_stamp: 1614586406,
+            cpu: 13.1,
+            mem_dalvik: 15.4,
+            men_total: 13.2,
+            men_native: 14.1,
+            net_in: 16,
+            net_out: 17,
+            fps: 24,
+        },
+        {
+            test_id: 2021010100281397,
+            device_id: 53,
+            time_stamp: 1614587406,
+            cpu: 16.1,
+            mem_dalvik: 13.4,
+            men_total: 11.2,
+            men_native: 13.1,
+            net_in: 12,
+            net_out: 15,
+            fps: 24,
+        },
+        {
+            test_id: 2021010100281397,
+            device_id: 53,
+            time_stamp: 1614588406,
+            cpu: 12.1,
+            mem_dalvik: 16.4,
+            men_total: 14.2,
+            men_native: 17.1,
+            net_in: 14,
+            net_out: 13,
+            fps: 26,
+        },
+        {
+            test_id: 2021010100281397,
+            device_id: 53,
+            time_stamp: 1614589406,
+            cpu: 16.5,
+            mem_dalvik: 15.6,
+            men_total: 15.2,
+            men_native: 15.1,
+            net_in: 13,
+            net_out: 17,
+            fps: 20,
+        },
+    ];
+    
+    const arr = array.map((item) => item.cpu)
+    arr.unshift('time_stamp')
+    // console.log(arr);
+    // console.log(
+    //     array.map((item) => {
+    //         return [item.time_stamp, item.cpu];
+    //     })
+    // );
+
+    </script>
+  </body>
+</html>

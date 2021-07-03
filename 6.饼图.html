@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 200px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      /**
+       * 1. 饼图数据: Array<{ name: string; value: number }>
+       *    必须包含name value两个属性
+       * */
+      const pieData = [
+        { name: '淘宝', value: 11231 },
+        { name: '京东', value: 22673 },
+        { name: '唯品会', value: 6123 },
+        { name: '1号店', value: 8989 },
+        { name: '聚美优品', value: 6700 },
+        { name: '聚美优品123', value: 9700 },
+      ]
+
+      const option = {
+        series: [
+          {
+            name: '销量',
+            type: 'pie', // 图表类型
+            data: pieData,
+
+            /* 2. 饼图文字显示 */
+            label: {
+              show: true,
+              formatter: arg => {
+                return arg.name + '平台 ' + arg.value + '元\n ' + arg.percent + '%'
+              },
+            },
+            labelLine: { show: true },
+
+            /* 3. 饼图半径和圆环图的设置 */
+            // radius: '20%', // 饼图半径: number or string(相对于DOM最短边的一半的20%)
+            radius: ['40%', '75%'], // 环形图: 内外圆环半径
+
+            /* 4. 南丁格尔图(每一块的半径不一样, 数值越大 半径越大) */
+            // roseType: 'radius',
+
+            /* 5. 点击选中效果 偏离圆点 */
+            selectedMode: 'single', // 'multiple': 不返回圆点, 'single': 返回圆点
+            selectedOffset: 30, // 偏离量(可选)
+          }
+        ],
+        // dataset: {
+        //   dimensions: ['type', 'value'],
+        //   source: [
+        //       ['淘宝', 11231],
+        //       ['京东', 22673],
+        //       ['唯品会', 6123],
+        //       ['1号店', 8989],
+        //       ['聚美优品', 6700],
+        //   ]
+        // }
+      }
+      myCharts.setOption(option)
+    </script>
+  </body>
+</html>

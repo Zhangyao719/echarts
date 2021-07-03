@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <meta charset="UTF-8">
+    <title>timeline</title>
+    <style>
+        .page {
+            width: 980px;
+            height: 500px;
+        }
+ 
+        .timeline {
+            width: 980px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div id="timeline1" class="timeline"></div>
+
+</div>
+
+<script type="text/javascript">
+    const originData = [
+        {
+            "imageindex": "26502307_46886_1585814863.jpg",
+            "timeindex": 1620809893926,
+            "timedate": "2021-05-12 16:58:13",
+            "time": 1620809893926,
+            "currentindex": 1620809893,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814865.jpg",
+            "timeindex": 1620809917282,
+            "timedate": "2021-05-12 16:58:37",
+            "time": 1620809917282,
+            "currentindex": 1620809917,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814871.jpg",
+            "timeindex": 1620810009723,
+            "timedate": "2021-05-12 17:00:09",
+            "time": 1620810009723,
+            "currentindex": 1620810009,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814873.jpg",
+            "timeindex": 1620810021022,
+            "timedate": "2021-05-12 17:00:21",
+            "time": 1620810021022,
+            "currentindex": 1620810021,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814874.jpg",
+            "timeindex": 1620810049601,
+            "timedate": "2021-05-12 17:00:49",
+            "time": 1620810049601,
+            "currentindex": 1620810049,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814875.jpg",
+            "timeindex": 1620810050644,
+            "timedate": "2021-05-12 17:00:50",
+            "time": 1620810050644,
+            "currentindex": 1620810050,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814876.jpg",
+            "timeindex": 1620810056167,
+            "timedate": "2021-05-12 17:00:56",
+            "time": 1620810056167,
+            "currentindex": 1620810056,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814878.jpg",
+            "timeindex": 1620810062162,
+            "timedate": "2021-05-12 17:01:02",
+            "time": 1620810062162,
+            "currentindex": 1620810062,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814882.jpg",
+            "timeindex": 1620810075480,
+            "timedate": "2021-05-12 17:01:15",
+            "time": 1620810075480,
+            "currentindex": 1620810075,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814883.jpg",
+            "timeindex": 1620810095680,
+            "timedate": "2021-05-12 17:01:35",
+            "time": 1620810095680,
+            "currentindex": 1620810095,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814884.jpg",
+            "timeindex": 1620810097485,
+            "timedate": "2021-05-12 17:01:37",
+            "time": 1620810097485,
+            "currentindex": 1620810097,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814885.jpg",
+            "timeindex": 1620810101501,
+            "timedate": "2021-05-12 17:01:41",
+            "time": 1620810101501,
+            "currentindex": 1620810101,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814887.jpg",
+            "timeindex": 1620810108576,
+            "timedate": "2021-05-12 17:01:48",
+            "time": 1620810108576,
+            "currentindex": 1620810108,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814889.jpg",
+            "timeindex": 1620810117587,
+            "timedate": "2021-05-12 17:01:57",
+            "time": 1620810117587,
+            "currentindex": 1620810117,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814890.jpg",
+            "timeindex": 1620810129634,
+            "timedate": "2021-05-12 17:02:09",
+            "time": 1620810129634,
+            "currentindex": 1620810129,
+            "errorname": "APP Crash"
+        },
+        {
+            "imageindex": "26502307_46886_1585814891.jpg",
+            "timeindex": 1620810131751,
+            "timedate": "2021-05-12 17:02:11",
+            "time": 1620810131751,
+            "currentindex": 1620810131,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814895.jpg",
+            "timeindex": 1620810148877,
+            "timedate": "2021-05-12 17:02:28",
+            "time": 1620810148877,
+            "currentindex": 1620810148,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814903.jpg",
+            "timeindex": 1620810223856,
+            "timedate": "2021-05-12 17:03:43",
+            "time": 1620810223856,
+            "currentindex": 1620810223,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814909.jpg",
+            "timeindex": 1620810253992,
+            "timedate": "2021-05-12 17:04:13",
+            "time": 1620810253992,
+            "currentindex": 1620810253,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814914.jpg",
+            "timeindex": 1620810321390,
+            "timedate": "2021-05-12 17:05:21",
+            "time": 1620810321390,
+            "currentindex": 1620810321,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814915.jpg",
+            "timeindex": 1620810321390,
+            "timedate": "2021-05-12 17:05:21",
+            "time": 1620810321390,
+            "currentindex": 1620810321,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814916.jpg",
+            "timeindex": 1620810360347,
+            "timedate": "2021-05-12 17:06:00",
+            "time": 1620810360347,
+            "currentindex": 1620810360,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814917.jpg",
+            "timeindex": 1620810360347,
+            "timedate": "2021-05-12 17:06:00",
+            "time": 1620810360347,
+            "currentindex": 1620810360,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814918.jpg",
+            "timeindex": 1620810374463,
+            "timedate": "2021-05-12 17:06:14",
+            "time": 1620810374463,
+            "currentindex": 1620810374,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814919.jpg",
+            "timeindex": 1620810374463,
+            "timedate": "2021-05-12 17:06:14",
+            "time": 1620810374463,
+            "currentindex": 1620810374,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814920.jpg",
+            "timeindex": 1620810384696,
+            "timedate": "2021-05-12 17:06:24",
+            "time": 1620810384696,
+            "currentindex": 1620810384,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814926.jpg",
+            "timeindex": 1620810395534,
+            "timedate": "2021-05-12 17:06:35",
+            "time": 1620810395534,
+            "currentindex": 1620810395,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814932.jpg",
+            "timeindex": 1620810428945,
+            "timedate": "2021-05-12 17:07:08",
+            "time": 1620810428945,
+            "currentindex": 1620810428,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814938.jpg",
+            "timeindex": 1620810489286,
+            "timedate": "2021-05-12 17:08:09",
+            "time": 1620810489286,
+            "currentindex": 1620810489,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814939.jpg",
+            "timeindex": 1620810489286,
+            "timedate": "2021-05-12 17:08:09",
+            "time": 1620810489286,
+            "currentindex": 1620810489,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814940.jpg",
+            "timeindex": 1620810506142,
+            "timedate": "2021-05-12 17:08:26",
+            "time": 1620810506142,
+            "currentindex": 1620810506,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585814941.jpg",
+            "timeindex": 1620810516910,
+            "timedate": "2021-05-12 17:08:36",
+            "time": 1620810516910,
+            "currentindex": 1620810516,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814942.jpg",
+            "timeindex": 1620810516910,
+            "timedate": "2021-05-12 17:08:36",
+            "time": 1620810516910,
+            "currentindex": 1620810516,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814943.jpg",
+            "timeindex": 1620810516910,
+            "timedate": "2021-05-12 17:08:36",
+            "time": 1620810516910,
+            "currentindex": 1620810516,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814949.jpg",
+            "timeindex": 1620810543211,
+            "timedate": "2021-05-12 17:09:03",
+            "time": 1620810543211,
+            "currentindex": 1620810543,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814955.jpg",
+            "timeindex": 1620810600301,
+            "timedate": "2021-05-12 17:10:00",
+            "time": 1620810600301,
+            "currentindex": 1620810600,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814961.jpg",
+            "timeindex": 1620810615858,
+            "timedate": "2021-05-12 17:10:15",
+            "time": 1620810615858,
+            "currentindex": 1620810615,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814962.jpg",
+            "timeindex": 1620810648546,
+            "timedate": "2021-05-12 17:10:48",
+            "time": 1620810648546,
+            "currentindex": 1620810648,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814963.jpg",
+            "timeindex": 1620810651135,
+            "timedate": "2021-05-12 17:10:51",
+            "time": 1620810651135,
+            "currentindex": 1620810651,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814964.jpg",
+            "timeindex": 1620810661871,
+            "timedate": "2021-05-12 17:11:01",
+            "time": 1620810661871,
+            "currentindex": 1620810661,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814965.jpg",
+            "timeindex": 1620810661871,
+            "timedate": "2021-05-12 17:11:01",
+            "time": 1620810661871,
+            "currentindex": 1620810661,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814966.jpg",
+            "timeindex": 1620810661871,
+            "timedate": "2021-05-12 17:11:01",
+            "time": 1620810661871,
+            "currentindex": 1620810661,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814972.jpg",
+            "timeindex": 1620810687677,
+            "timedate": "2021-05-12 17:11:27",
+            "time": 1620810687677,
+            "currentindex": 1620810687,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814975.jpg",
+            "timeindex": 1620810751734,
+            "timedate": "2021-05-12 17:12:31",
+            "time": 1620810751734,
+            "currentindex": 1620810751,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814976.jpg",
+            "timeindex": 1620810751734,
+            "timedate": "2021-05-12 17:12:31",
+            "time": 1620810751734,
+            "currentindex": 1620810751,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814977.jpg",
+            "timeindex": 1620810766865,
+            "timedate": "2021-05-12 17:12:46",
+            "time": 1620810766865,
+            "currentindex": 1620810766,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814978.jpg",
+            "timeindex": 1620810771702,
+            "timedate": "2021-05-12 17:12:51",
+            "time": 1620810771702,
+            "currentindex": 1620810771,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814979.jpg",
+            "timeindex": 1620810780320,
+            "timedate": "2021-05-12 17:13:00",
+            "time": 1620810780320,
+            "currentindex": 1620810780,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814985.jpg",
+            "timeindex": 1620810805217,
+            "timedate": "2021-05-12 17:13:25",
+            "time": 1620810805217,
+            "currentindex": 1620810805,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814991.jpg",
+            "timeindex": 1620810842963,
+            "timedate": "2021-05-12 17:14:02",
+            "time": 1620810842963,
+            "currentindex": 1620810842,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814992.jpg",
+            "timeindex": 1620810842963,
+            "timedate": "2021-05-12 17:14:02",
+            "time": 1620810842963,
+            "currentindex": 1620810842,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814993.jpg",
+            "timeindex": 1620810842963,
+            "timedate": "2021-05-12 17:14:02",
+            "time": 1620810842963,
+            "currentindex": 1620810842,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814994.jpg",
+            "timeindex": 1620810878574,
+            "timedate": "2021-05-12 17:14:38",
+            "time": 1620810878574,
+            "currentindex": 1620810878,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814995.jpg",
+            "timeindex": 1620810878574,
+            "timedate": "2021-05-12 17:14:38",
+            "time": 1620810878574,
+            "currentindex": 1620810878,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814996.jpg",
+            "timeindex": 1620810878574,
+            "timedate": "2021-05-12 17:14:38",
+            "time": 1620810878574,
+            "currentindex": 1620810878,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585814997.jpg",
+            "timeindex": 1620810895321,
+            "timedate": "2021-05-12 17:14:55",
+            "time": 1620810895321,
+            "currentindex": 1620810895,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815003.jpg",
+            "timeindex": 1620810925401,
+            "timedate": "2021-05-12 17:15:25",
+            "time": 1620810925401,
+            "currentindex": 1620810925,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815004.jpg",
+            "timeindex": 1620810925401,
+            "timedate": "2021-05-12 17:15:25",
+            "time": 1620810925401,
+            "currentindex": 1620810925,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815005.jpg",
+            "timeindex": 1620810925401,
+            "timedate": "2021-05-12 17:15:25",
+            "time": 1620810925401,
+            "currentindex": 1620810925,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815006.jpg",
+            "timeindex": 1620810943912,
+            "timedate": "2021-05-12 17:15:43",
+            "time": 1620810943912,
+            "currentindex": 1620810943,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815007.jpg",
+            "timeindex": 1620810955989,
+            "timedate": "2021-05-12 17:15:55",
+            "time": 1620810955989,
+            "currentindex": 1620810955,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815008.jpg",
+            "timeindex": 1620810960288,
+            "timedate": "2021-05-12 17:16:00",
+            "time": 1620810960288,
+            "currentindex": 1620810960,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815009.jpg",
+            "timeindex": 1620810967148,
+            "timedate": "2021-05-12 17:16:07",
+            "time": 1620810967148,
+            "currentindex": 1620810967,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815011.jpg",
+            "timeindex": 1620810975276,
+            "timedate": "2021-05-12 17:16:15",
+            "time": 1620810975276,
+            "currentindex": 1620810975,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815016.jpg",
+            "timeindex": 1620811037377,
+            "timedate": "2021-05-12 17:17:17",
+            "time": 1620811037377,
+            "currentindex": 1620811037,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815017.jpg",
+            "timeindex": 1620811037377,
+            "timedate": "2021-05-12 17:17:17",
+            "time": 1620811037377,
+            "currentindex": 1620811037,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815018.jpg",
+            "timeindex": 1620811037377,
+            "timedate": "2021-05-12 17:17:17",
+            "time": 1620811037377,
+            "currentindex": 1620811037,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815020.jpg",
+            "timeindex": 1620811037377,
+            "timedate": "2021-05-12 17:17:17",
+            "time": 1620811037377,
+            "currentindex": 1620811037,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815031.jpg",
+            "timeindex": 1620811116347,
+            "timedate": "2021-05-12 17:18:36",
+            "time": 1620811116347,
+            "currentindex": 1620811116,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815035.jpg",
+            "timeindex": 1620811146961,
+            "timedate": "2021-05-12 17:19:06",
+            "time": 1620811146961,
+            "currentindex": 1620811146,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815036.jpg",
+            "timeindex": 1620811146961,
+            "timedate": "2021-05-12 17:19:06",
+            "time": 1620811146961,
+            "currentindex": 1620811146,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815037.jpg",
+            "timeindex": 1620811179657,
+            "timedate": "2021-05-12 17:19:39",
+            "time": 1620811179657,
+            "currentindex": 1620811179,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815038.jpg",
+            "timeindex": 1620811183485,
+            "timedate": "2021-05-12 17:19:43",
+            "time": 1620811183485,
+            "currentindex": 1620811183,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815039.jpg",
+            "timeindex": 1620811183485,
+            "timedate": "2021-05-12 17:19:43",
+            "time": 1620811183485,
+            "currentindex": 1620811183,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815040.jpg",
+            "timeindex": 1620811183485,
+            "timedate": "2021-05-12 17:19:43",
+            "time": 1620811183485,
+            "currentindex": 1620811183,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815041.jpg",
+            "timeindex": 1620811200297,
+            "timedate": "2021-05-12 17:20:00",
+            "time": 1620811200297,
+            "currentindex": 1620811200,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815043.jpg",
+            "timeindex": 1620811200297,
+            "timedate": "2021-05-12 17:20:00",
+            "time": 1620811200297,
+            "currentindex": 1620811200,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815051.jpg",
+            "timeindex": 1620811260321,
+            "timedate": "2021-05-12 17:21:00",
+            "time": 1620811260321,
+            "currentindex": 1620811260,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815052.jpg",
+            "timeindex": 1620811283191,
+            "timedate": "2021-05-12 17:21:23",
+            "time": 1620811283191,
+            "currentindex": 1620811283,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815053.jpg",
+            "timeindex": 1620811283191,
+            "timedate": "2021-05-12 17:21:23",
+            "time": 1620811283191,
+            "currentindex": 1620811283,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815054.jpg",
+            "timeindex": 1620811320313,
+            "timedate": "2021-05-12 17:22:00",
+            "time": 1620811320313,
+            "currentindex": 1620811320,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815055.jpg",
+            "timeindex": 1620811320313,
+            "timedate": "2021-05-12 17:22:00",
+            "time": 1620811320313,
+            "currentindex": 1620811320,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815057.jpg",
+            "timeindex": 1620811320313,
+            "timedate": "2021-05-12 17:22:00",
+            "time": 1620811320313,
+            "currentindex": 1620811320,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815060.jpg",
+            "timeindex": 1620811380117,
+            "timedate": "2021-05-12 17:23:00",
+            "time": 1620811380117,
+            "currentindex": 1620811380,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815066.jpg",
+            "timeindex": 1620811390993,
+            "timedate": "2021-05-12 17:23:10",
+            "time": 1620811390993,
+            "currentindex": 1620811390,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815072.jpg",
+            "timeindex": 1620811440326,
+            "timedate": "2021-05-12 17:24:00",
+            "time": 1620811440326,
+            "currentindex": 1620811440,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815073.jpg",
+            "timeindex": 1620811458560,
+            "timedate": "2021-05-12 17:24:18",
+            "time": 1620811458560,
+            "currentindex": 1620811458,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815074.jpg",
+            "timeindex": 1620811458560,
+            "timedate": "2021-05-12 17:24:18",
+            "time": 1620811458560,
+            "currentindex": 1620811458,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815075.jpg",
+            "timeindex": 1620811472493,
+            "timedate": "2021-05-12 17:24:32",
+            "time": 1620811472493,
+            "currentindex": 1620811472,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815076.jpg",
+            "timeindex": 1620811482731,
+            "timedate": "2021-05-12 17:24:42",
+            "time": 1620811482731,
+            "currentindex": 1620811482,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585815077.jpg",
+            "timeindex": 1620811482731,
+            "timedate": "2021-05-12 17:24:42",
+            "time": 1620811482731,
+            "currentindex": 1620811482,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585815079.jpg",
+            "timeindex": 1620811495196,
+            "timedate": "2021-05-12 17:24:55",
+            "time": 1620811495196,
+            "currentindex": 1620811495,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815085.jpg",
+            "timeindex": 1620811529187,
+            "timedate": "2021-05-12 17:25:29",
+            "time": 1620811529187,
+            "currentindex": 1620811529,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815086.jpg",
+            "timeindex": 1620811534506,
+            "timedate": "2021-05-12 17:25:34",
+            "time": 1620811534506,
+            "currentindex": 1620811534,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815087.jpg",
+            "timeindex": 1620811540592,
+            "timedate": "2021-05-12 17:25:40",
+            "time": 1620811540592,
+            "currentindex": 1620811540,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815088.jpg",
+            "timeindex": 1620811540592,
+            "timedate": "2021-05-12 17:25:40",
+            "time": 1620811540592,
+            "currentindex": 1620811540,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815094.jpg",
+            "timeindex": 1620811571805,
+            "timedate": "2021-05-12 17:26:11",
+            "time": 1620811571805,
+            "currentindex": 1620811571,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815100.jpg",
+            "timeindex": 1620811604482,
+            "timedate": "2021-05-12 17:26:44",
+            "time": 1620811604482,
+            "currentindex": 1620811604,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815101.jpg",
+            "timeindex": 1620811620293,
+            "timedate": "2021-05-12 17:27:00",
+            "time": 1620811620293,
+            "currentindex": 1620811620,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815102.jpg",
+            "timeindex": 1620811620293,
+            "timedate": "2021-05-12 17:27:00",
+            "time": 1620811620293,
+            "currentindex": 1620811620,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815103.jpg",
+            "timeindex": 1620811642576,
+            "timedate": "2021-05-12 17:27:22",
+            "time": 1620811642576,
+            "currentindex": 1620811642,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815104.jpg",
+            "timeindex": 1620811649535,
+            "timedate": "2021-05-12 17:27:29",
+            "time": 1620811649535,
+            "currentindex": 1620811649,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815105.jpg",
+            "timeindex": 1620811657920,
+            "timedate": "2021-05-12 17:27:37",
+            "time": 1620811657920,
+            "currentindex": 1620811657,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815114.jpg",
+            "timeindex": 1620811720497,
+            "timedate": "2021-05-12 17:28:40",
+            "time": 1620811720497,
+            "currentindex": 1620811720,
+            "errorname": "1"
+        },
+        {
+            "imageindex": "26502307_46886_1585815120.jpg",
+            "timeindex": 1620811755337,
+            "timedate": "2021-05-12 17:29:15",
+            "time": 1620811755337,
+            "currentindex": 1620811755,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815121.jpg",
+            "timeindex": 1620811773160,
+            "timedate": "2021-05-12 17:29:33",
+            "time": 1620811773160,
+            "currentindex": 1620811773,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815122.jpg",
+            "timeindex": 1620811774666,
+            "timedate": "2021-05-12 17:29:34",
+            "time": 1620811774666,
+            "currentindex": 1620811774,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815128.jpg",
+            "timeindex": 1620811806751,
+            "timedate": "2021-05-12 17:30:06",
+            "time": 1620811806751,
+            "currentindex": 1620811806,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815134.jpg",
+            "timeindex": 1620811842315,
+            "timedate": "2021-05-12 17:30:42",
+            "time": 1620811842315,
+            "currentindex": 1620811842,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815140.jpg",
+            "timeindex": 1620811877907,
+            "timedate": "2021-05-12 17:31:17",
+            "time": 1620811877907,
+            "currentindex": 1620811877,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815146.jpg",
+            "timeindex": 1620811913468,
+            "timedate": "2021-05-12 17:31:53",
+            "time": 1620811913468,
+            "currentindex": 1620811913,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815147.jpg",
+            "timeindex": 1620811927173,
+            "timedate": "2021-05-12 17:32:07",
+            "time": 1620811927173,
+            "currentindex": 1620811927,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815148.jpg",
+            "timeindex": 1620811937645,
+            "timedate": "2021-05-12 17:32:17",
+            "time": 1620811937645,
+            "currentindex": 1620811937,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815149.jpg",
+            "timeindex": 1620811943185,
+            "timedate": "2021-05-12 17:32:23",
+            "time": 1620811943185,
+            "currentindex": 1620811943,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815150.jpg",
+            "timeindex": 1620811948713,
+            "timedate": "2021-05-12 17:32:28",
+            "time": 1620811948713,
+            "currentindex": 1620811948,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815151.jpg",
+            "timeindex": 1620811948713,
+            "timedate": "2021-05-12 17:32:28",
+            "time": 1620811948713,
+            "currentindex": 1620811948,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815152.jpg",
+            "timeindex": 1620811948713,
+            "timedate": "2021-05-12 17:32:28",
+            "time": 1620811948713,
+            "currentindex": 1620811948,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815153.jpg",
+            "timeindex": 1620811954519,
+            "timedate": "2021-05-12 17:32:34",
+            "time": 1620811954519,
+            "currentindex": 1620811954,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815154.jpg",
+            "timeindex": 1620811960579,
+            "timedate": "2021-05-12 17:32:40",
+            "time": 1620811960579,
+            "currentindex": 1620811960,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815155.jpg",
+            "timeindex": 1620811962032,
+            "timedate": "2021-05-12 17:32:42",
+            "time": 1620811962032,
+            "currentindex": 1620811962,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815170.jpg",
+            "timeindex": 1620812060336,
+            "timedate": "2021-05-12 17:34:20",
+            "time": 1620812060336,
+            "currentindex": 1620812060,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815176.jpg",
+            "timeindex": 1620812100313,
+            "timedate": "2021-05-12 17:35:00",
+            "time": 1620812100313,
+            "currentindex": 1620812100,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815182.jpg",
+            "timeindex": 1620812127178,
+            "timedate": "2021-05-12 17:35:27",
+            "time": 1620812127178,
+            "currentindex": 1620812127,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815188.jpg",
+            "timeindex": 1620812160325,
+            "timedate": "2021-05-12 17:36:00",
+            "time": 1620812160325,
+            "currentindex": 1620812160,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815189.jpg",
+            "timeindex": 1620812193005,
+            "timedate": "2021-05-12 17:36:33",
+            "time": 1620812193005,
+            "currentindex": 1620812193,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815190.jpg",
+            "timeindex": 1620812193005,
+            "timedate": "2021-05-12 17:36:33",
+            "time": 1620812193005,
+            "currentindex": 1620812193,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815191.jpg",
+            "timeindex": 1620812193005,
+            "timedate": "2021-05-12 17:36:33",
+            "time": 1620812193005,
+            "currentindex": 1620812193,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815192.jpg",
+            "timeindex": 1620812220311,
+            "timedate": "2021-05-12 17:37:00",
+            "time": 1620812220311,
+            "currentindex": 1620812220,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815193.jpg",
+            "timeindex": 1620812227152,
+            "timedate": "2021-05-12 17:37:07",
+            "time": 1620812227152,
+            "currentindex": 1620812227,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815194.jpg",
+            "timeindex": 1620812227152,
+            "timedate": "2021-05-12 17:37:07",
+            "time": 1620812227152,
+            "currentindex": 1620812227,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815200.jpg",
+            "timeindex": 1620812259690,
+            "timedate": "2021-05-12 17:37:39",
+            "time": 1620812259690,
+            "currentindex": 1620812259,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815202.jpg",
+            "timeindex": 1620812259690,
+            "timedate": "2021-05-12 17:37:39",
+            "time": 1620812259690,
+            "currentindex": 1620812259,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815206.jpg",
+            "timeindex": 1620812295225,
+            "timedate": "2021-05-12 17:38:15",
+            "time": 1620812295225,
+            "currentindex": 1620812295,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815212.jpg",
+            "timeindex": 1620812346396,
+            "timedate": "2021-05-12 17:39:06",
+            "time": 1620812346396,
+            "currentindex": 1620812346,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815218.jpg",
+            "timeindex": 1620812382929,
+            "timedate": "2021-05-12 17:39:42",
+            "time": 1620812382929,
+            "currentindex": 1620812382,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815219.jpg",
+            "timeindex": 1620812397128,
+            "timedate": "2021-05-12 17:39:57",
+            "time": 1620812397128,
+            "currentindex": 1620812397,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815220.jpg",
+            "timeindex": 1620812407346,
+            "timedate": "2021-05-12 17:40:07",
+            "time": 1620812407346,
+            "currentindex": 1620812407,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815221.jpg",
+            "timeindex": 1620812409736,
+            "timedate": "2021-05-12 17:40:09",
+            "time": 1620812409736,
+            "currentindex": 1620812409,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815222.jpg",
+            "timeindex": 1620812409736,
+            "timedate": "2021-05-12 17:40:09",
+            "time": 1620812409736,
+            "currentindex": 1620812409,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815228.jpg",
+            "timeindex": 1620812427429,
+            "timedate": "2021-05-12 17:40:27",
+            "time": 1620812427429,
+            "currentindex": 1620812427,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815234.jpg",
+            "timeindex": 1620812462745,
+            "timedate": "2021-05-12 17:41:02",
+            "time": 1620812462745,
+            "currentindex": 1620812462,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815240.jpg",
+            "timeindex": 1620812520309,
+            "timedate": "2021-05-12 17:42:00",
+            "time": 1620812520309,
+            "currentindex": 1620812520,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815241.jpg",
+            "timeindex": 1620812532463,
+            "timedate": "2021-05-12 17:42:12",
+            "time": 1620812532463,
+            "currentindex": 1620812532,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815242.jpg",
+            "timeindex": 1620812532463,
+            "timedate": "2021-05-12 17:42:12",
+            "time": 1620812532463,
+            "currentindex": 1620812532,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815243.jpg",
+            "timeindex": 1620812545837,
+            "timedate": "2021-05-12 17:42:25",
+            "time": 1620812545837,
+            "currentindex": 1620812545,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815244.jpg",
+            "timeindex": 1620812545837,
+            "timedate": "2021-05-12 17:42:25",
+            "time": 1620812545837,
+            "currentindex": 1620812545,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815248.jpg",
+            "timeindex": 1620812580316,
+            "timedate": "2021-05-12 17:43:00",
+            "time": 1620812580316,
+            "currentindex": 1620812580,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815254.jpg",
+            "timeindex": 1620812601013,
+            "timedate": "2021-05-12 17:43:21",
+            "time": 1620812601013,
+            "currentindex": 1620812601,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815260.jpg",
+            "timeindex": 1620812640315,
+            "timedate": "2021-05-12 17:44:00",
+            "time": 1620812640315,
+            "currentindex": 1620812640,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815261.jpg",
+            "timeindex": 1620812667472,
+            "timedate": "2021-05-12 17:44:27",
+            "time": 1620812667472,
+            "currentindex": 1620812667,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815267.jpg",
+            "timeindex": 1620812703387,
+            "timedate": "2021-05-12 17:45:03",
+            "time": 1620812703387,
+            "currentindex": 1620812703,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815268.jpg",
+            "timeindex": 1620812703387,
+            "timedate": "2021-05-12 17:45:03",
+            "time": 1620812703387,
+            "currentindex": 1620812703,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815269.jpg",
+            "timeindex": 1620812703387,
+            "timedate": "2021-05-12 17:45:03",
+            "time": 1620812703387,
+            "currentindex": 1620812703,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815270.jpg",
+            "timeindex": 1620812703387,
+            "timedate": "2021-05-12 17:45:03",
+            "time": 1620812703387,
+            "currentindex": 1620812703,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815271.jpg",
+            "timeindex": 1620812735909,
+            "timedate": "2021-05-12 17:45:35",
+            "time": 1620812735909,
+            "currentindex": 1620812735,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815272.jpg",
+            "timeindex": 1620812739452,
+            "timedate": "2021-05-12 17:45:39",
+            "time": 1620812739452,
+            "currentindex": 1620812739,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815276.jpg",
+            "timeindex": 1620812773603,
+            "timedate": "2021-05-12 17:46:13",
+            "time": 1620812773603,
+            "currentindex": 1620812773,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815284.jpg",
+            "timeindex": 1620812820332,
+            "timedate": "2021-05-12 17:47:00",
+            "time": 1620812820332,
+            "currentindex": 1620812820,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815285.jpg",
+            "timeindex": 1620812841240,
+            "timedate": "2021-05-12 17:47:21",
+            "time": 1620812841240,
+            "currentindex": 1620812841,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815291.jpg",
+            "timeindex": 1620812875136,
+            "timedate": "2021-05-12 17:47:55",
+            "time": 1620812875136,
+            "currentindex": 1620812875,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815297.jpg",
+            "timeindex": 1620812914210,
+            "timedate": "2021-05-12 17:48:34",
+            "time": 1620812914210,
+            "currentindex": 1620812914,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815298.jpg",
+            "timeindex": 1620812914210,
+            "timedate": "2021-05-12 17:48:34",
+            "time": 1620812914210,
+            "currentindex": 1620812914,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815304.jpg",
+            "timeindex": 1620812947767,
+            "timedate": "2021-05-12 17:49:07",
+            "time": 1620812947767,
+            "currentindex": 1620812947,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815305.jpg",
+            "timeindex": 1620812947767,
+            "timedate": "2021-05-12 17:49:07",
+            "time": 1620812947767,
+            "currentindex": 1620812947,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815311.jpg",
+            "timeindex": 1620812980457,
+            "timedate": "2021-05-12 17:49:40",
+            "time": 1620812980457,
+            "currentindex": 1620812980,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815317.jpg",
+            "timeindex": 1620813016445,
+            "timedate": "2021-05-12 17:50:16",
+            "time": 1620813016445,
+            "currentindex": 1620813016,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815321.jpg",
+            "timeindex": 1620813060322,
+            "timedate": "2021-05-12 17:51:00",
+            "time": 1620813060322,
+            "currentindex": 1620813060,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815322.jpg",
+            "timeindex": 1620813060322,
+            "timedate": "2021-05-12 17:51:00",
+            "time": 1620813060322,
+            "currentindex": 1620813060,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815323.jpg",
+            "timeindex": 1620813060322,
+            "timedate": "2021-05-12 17:51:00",
+            "time": 1620813060322,
+            "currentindex": 1620813060,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815327.jpg",
+            "timeindex": 1620813083197,
+            "timedate": "2021-05-12 17:51:23",
+            "time": 1620813083197,
+            "currentindex": 1620813083,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815333.jpg",
+            "timeindex": 1620813144336,
+            "timedate": "2021-05-12 17:52:24",
+            "time": 1620813144336,
+            "currentindex": 1620813144,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815339.jpg",
+            "timeindex": 1620813146489,
+            "timedate": "2021-05-12 17:52:26",
+            "time": 1620813146489,
+            "currentindex": 1620813146,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815340.jpg",
+            "timeindex": 1620813180300,
+            "timedate": "2021-05-12 17:53:00",
+            "time": 1620813180300,
+            "currentindex": 1620813180,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815346.jpg",
+            "timeindex": 1620813215807,
+            "timedate": "2021-05-12 17:53:35",
+            "time": 1620813215807,
+            "currentindex": 1620813215,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815348.jpg",
+            "timeindex": 1620813215807,
+            "timedate": "2021-05-12 17:53:35",
+            "time": 1620813215807,
+            "currentindex": 1620813215,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815354.jpg",
+            "timeindex": 1620813284089,
+            "timedate": "2021-05-12 17:54:44",
+            "time": 1620813284089,
+            "currentindex": 1620813284,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815360.jpg",
+            "timeindex": 1620813318832,
+            "timedate": "2021-05-12 17:55:18",
+            "time": 1620813318832,
+            "currentindex": 1620813318,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815366.jpg",
+            "timeindex": 1620813360316,
+            "timedate": "2021-05-12 17:56:00",
+            "time": 1620813360316,
+            "currentindex": 1620813360,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815367.jpg",
+            "timeindex": 1620813360316,
+            "timedate": "2021-05-12 17:56:00",
+            "time": 1620813360316,
+            "currentindex": 1620813360,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815368.jpg",
+            "timeindex": 1620813360316,
+            "timedate": "2021-05-12 17:56:00",
+            "time": 1620813360316,
+            "currentindex": 1620813360,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815371.jpg",
+            "timeindex": 1620813404350,
+            "timedate": "2021-05-12 17:56:44",
+            "time": 1620813404350,
+            "currentindex": 1620813404,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815372.jpg",
+            "timeindex": 1620813421102,
+            "timedate": "2021-05-12 17:57:01",
+            "time": 1620813421102,
+            "currentindex": 1620813421,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815373.jpg",
+            "timeindex": 1620813427972,
+            "timedate": "2021-05-12 17:57:07",
+            "time": 1620813427972,
+            "currentindex": 1620813427,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815377.jpg",
+            "timeindex": 1620813435907,
+            "timedate": "2021-05-12 17:57:15",
+            "time": 1620813435907,
+            "currentindex": 1620813435,
+            "errorname": ""
+        },
+        {
+            "imageindex": "26502307_46886_1585815378.jpg",
+            "timeindex": 1620813471931,
+            "timedate": "2021-05-12 17:57:51",
+            "time": 1620813471931,
+            "currentindex": 1620813471,
+            "errorname": ""
+        }
+    ];
+
+    const data = _.map(originData, function (item) {
+        return [item.timeindex, 1, item.errorname];
+    });
+
+    const container1 = document.getElementById('timeline1');
+    const chart1 = echarts.init(container1);
+    chart1.setOption({
+        title: {
+            text: "screencut timeline",
+        },
+        xAxis: {
+            type: 'time',
+            splitNumber: 10,
+            axisLabel: {
+                formatter: (time) => moment(time).format('HH:mm:ss'),
+            },
+        },
+        yAxis: {
+            show: false,
+            min: 0,
+            max: 2,
+        },
+        series: [
+            {
+                type: 'scatter',
+                itemStyle: {
+                    color: (instance) => instance.data[2] ? '#ff057a' : '#0074ff',
+                },
+                selectedMode: true,
+                large: true,
+                symbol: 'roundRect',
+                symbolSize: 6,
+                data,
+                hoverAnimation: true,
+
+                // 图标标域
+                markArea: {
+                    itemStyle: { opacity: 0.3, color: '#eeeeee' },
+                    // 标域起始范围(可设置多种格式):
+                    data: [[
+                        { xAxis: 'min' },
+                        { xAxis: 'max' },
+                    ]],
+                },
+            },
+
+            // 动态涟漪动画
+            // {
+            //     type: 'effectScatter',
+            //     itemStyle: {
+            //         color: (instance) => instance.data[2] ? '#ff057a' : '#0074ff',
+            //     },
+            //     showEffectOn: 'emphasis',
+            //     symbolSize: 5,
+            //     data: this.scatterData,
+            //     rippleEffect: {
+            //         scale: 4,
+            //     },
+            // },
+        ],
+        dataZoom: [{
+            type: 'slider',
+            handleStyle: {
+                borderCap: 'round',
+            },
+            labelFormatter: '', // 区域缩放 滑块两端的文字格式
+        }],
+        tooltip: {
+            axisPointer: {
+                show: true,
+                snap: true,
+            },
+            trigger: 'axis',
+            formatter: (instance) => moment(instance[0].data[0]).format('HH:mm:ss'),
+        },
+        grid: {
+            top: 35,
+            left: 25,
+            right: 45,
+            // bottom: 20,
+        },
+    });
+
+/*    const arr = [
+        ["2021-05-03T07:44:19+08:00", 1, 0],
+        ["2021-05-03T07:45:19+08:00", 1, 0],
+        ["2021-05-03T07:47:04+08:00", 1, 0],
+        ["2021-05-03T07:47:10+08:00", 1, 0],
+        ["2021-05-03T07:47:15+08:00", 1, 0],
+        ["2021-05-03T07:47:21+08:00", 1, 0],
+        ["2021-05-03T07:47:27+08:00", 1, 0],
+        ["2021-05-03T07:47:33+08:00", 1, 0],
+        ["2021-05-03T07:47:39+08:00", 1, 0],
+        ["2021-05-03T07:47:44+08:00", 1, 0],
+        ["2021-05-03T07:47:50+08:00", 1, 0],
+        ["2021-05-03T07:47:56+08:00", 1, 0],
+    ]
+
+     const obj1 = {
+        xAxis: {
+            type: 'time',
+            splitNumber: 50,
+            axisLabel: {
+                formatter: (time) => format(time, 'HH:mm:ss'),
+            },
+        },
+        yAxis: {
+            show: false,
+            min: 0,
+            max: 2,
+        },
+        series: [{
+            type: 'scatter',
+            itemStyle: {
+                color: (instance) => instance.data[2] ? '#ff057a' : '#0074ff',
+            },
+            selectedMode: true,
+            large: true,
+            symbol: 'roundRect',
+            symbolSize: 6,
+            data: [
+                ["2021-05-03T07:44:19+08:00", 1, 0],
+                ["2021-05-03T07:45:19+08:00", 1, 0],
+                ["2021-05-03T07:47:04+08:00", 1, 0],
+                ["2021-05-03T07:47:10+08:00", 1, 0],
+                ["2021-05-03T07:47:15+08:00", 1, 0],
+                ["2021-05-03T07:47:21+08:00", 1, 0],
+                ["2021-05-03T07:47:27+08:00", 1, 0],
+                ["2021-05-03T07:47:33+08:00", 1, 0],
+                ["2021-05-03T07:47:39+08:00", 1, 0],
+                ["2021-05-03T07:47:44+08:00", 1, 0],
+                ["2021-05-03T07:47:50+08:00", 1, 0],
+                ["2021-05-03T07:47:56+08:00", 1, 0],
+            ],
+            hoverAnimation: false,
+            tooltip: {
+                formatter: (instance) => format(instance.data[0], 'HH:mm:ss'),
+            },
+        }],
+        dataZoom: [{ type: 'slider' }],
+        tooltip: {
+            axisPointer: {
+                show: true,
+                snap: true,
+            },
+        },
+    } */
+</script>
+</body>
+</html>

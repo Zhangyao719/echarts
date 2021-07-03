@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 80px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      let yAxisData1 = [5, 20, 36, 10, 10, 20]
+      let yAxisData2 = [15, 30, 26, 20, 15, 60]
+
+      const option = {
+        // x轴和y轴可以互换(横向柱状图)
+        xAxis: {
+          type: 'category', // 类目轴
+          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+        },
+        yAxis: {
+          type: 'value' // 数值轴, (会自动寻找在series中寻找x对应的data)
+        },
+        series: [ // 可放多套数据
+          {
+            type: 'bar', // 图表类型
+            name: '销量',
+            data: yAxisData1,
+
+            // 最值标记点(柱形图一般不用, 折线图用的多)
+            markPoint: {
+              data: [
+                { type: 'max', name: '最大值' },
+                { type: 'min', name: '最小值' },
+              ]
+            },
+            // 图表标线(平均值)
+            markLine: {
+              data: [{ type: 'average', name: '平均值' }]
+            },
+            // 柱形文字标注
+            label: {
+              show: true,
+              rotate: 45, // 旋转角度
+              position: 'top' // 标注位置(默认'inside')
+            },
+            // 柱条宽度
+            barWidth: '40%', // 默认自适应
+            // 柱条颜色
+            itemStyle: {
+              color: 'rgba(46, 204, 113, 1)',
+            },
+          },
+          //#region 
+          {
+            type: 'bar', // 图表类型
+            name: '盈利',
+            data: yAxisData2,
+
+            // 最值标记点(柱形图一般不用, 折线图用的多)
+            markPoint: {
+              data: [
+                { type: 'max', name: '最大值' },
+                { type: 'min', name: '最小值' },
+              ]
+            },
+            // 平均值
+            markLine: {
+              data: [{ type: 'average', name: '平均值' }]
+            },
+            // 柱形文字标注
+            label: {
+              show: true,
+              rotate: 45, // 旋转角度
+              position: 'top' // 标注位置(默认'inside')
+            },
+            // 柱条宽度
+            barWidth: '40%', // 默认自适应
+            itemStyle: {
+              color: 'pink',
+            },
+          }
+          //#endregion
+        ],
+
+        /* 通用配置 */
+        // 1. title 标题
+        title: {
+          show: true,
+          text: '生活用品',
+          link: 'https://www.baidu.com',
+          textStyle: {
+            color: 'red',
+          },
+          borderWidth: 3,
+          borderColor: 'pink',
+          borderRadius: 5,
+          left: 100,
+          top: 10
+        },
+        // 2. tooltip 工具提示(鼠标划过或点击时的显示框)
+        tooltip: {
+          show: true,
+          trigger: 'axis', // 触发类型 hover到轴线内时显示, 默认'item'(hover到柱条时显示)
+          // triggerOn: 'click', // 触发时机 (默认mouseover)
+          // formatter: '{a} {b} {c}', // 模板 string or function 不同图表含义有区别
+          // formatter: arg => {
+          //   console.log(arg);
+          //   return arg[0].name + arg[0].value;
+          // },
+          formatter: `
+            {b} <br/>
+            {a0}: {c0}% <br/>
+            {a1}: {c1} <br/>
+          `,
+          axisPointer: {
+            // 线条的样式
+            type: 'line',
+            lineStyle: {
+                color: 'red',
+                width: 2, // 线宽
+            }
+          }
+        },
+        // 3. toolbox 工具按钮
+        toolbox: {
+          feature: {
+            saveAsImage: { // 导出为图片
+              title: '导出为图片', // hover提示文本
+            },
+            dataView: {}, // 数据视图(修改数据)
+            restore: {}, // 重置(还原初始数据)
+            dataZoom: {}, // 区域缩放
+            magicType: { // 图表类型转换
+              type: ['bar', 'line', 'stack', 'tiled']
+            }
+          }
+        },
+        // 4. 图例, 用于筛选系列, 需配合series使用(series有多个数据)
+        legend: {
+          data: ['销量', '盈利'], // 与series里的每一个name对应
+          icon: 'rect', // 更改图例图标
+        },
+      }
+
+      myCharts.setOption(option)
+
+    </script>
+  </body>
+</html>

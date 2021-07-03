@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 80px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      const option = {
+        title: {
+          show: true,
+          text: '标题',
+          link: 'https://www.baidu.cn',
+          textStyle: {
+            color: 'red'
+          }
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        // x轴和y轴可以互换(横向柱状图)
+        xAxis: {
+          type: 'category', // 类目轴
+          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+        },
+        yAxis: {
+          type: 'value' // 数值轴, (会自动寻找在series中寻找x对应的data)
+        },
+        series: [
+          {
+            type: 'bar', // 图表类型
+            name: '销量',
+            data: [5, 20, 36, 10, 10, 20],
+
+            // 最值标记点(柱形图一般不用, 折线图用的多)
+            markPoint: {
+              data: [
+                { type: 'max', name: '最大值' },
+                { type: 'min', name: '最小值' },
+              ]
+            },
+            // 平均值
+            markLine: {
+              data: [{ type: 'average', name: '平均值' }]
+            },
+            // 柱形文字标注
+            label: {
+              show: true,
+              rotate: 45, // 旋转角度
+              position: 'top' // 标注位置(默认'inside')
+            },
+            // 柱条宽度
+            barWidth: '60%' // 默认自适应
+          }
+        ]
+      }
+      myCharts.setOption(option)
+      myCharts.on('click', function (params) {
+        console.log('🚀 ~ params', params);
+        window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+    });
+    </script>
+  </body>
+</html>

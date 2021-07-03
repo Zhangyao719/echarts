@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 200px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+      const colors = ['#5470C6', '#91CC75', '#EE6666'];
+      const option = {
+        color: colors,
+
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross' } // 十字准星指示器
+        },
+        grid: { right: '20%' },
+
+        toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: { data: ['蒸发量', '降水量', '平均温度'] },
+
+        xAxis: [{
+            type: 'category',
+            axisTick: { alignWithLabel: true }, // 类目轴在boundaryGap为true时有效, 确保刻度线和标签对齐
+        }],
+
+        yAxis: [
+            {
+                type: 'value',
+                name: '蒸发量',
+
+                // y轴的数值范围(可不设)
+                min: 0,
+                max: 250,
+
+                // y轴位于表格的位置
+                position: 'right',
+
+                // y轴刻度线的样式
+                axisLine: {
+                    show: true,
+                    lineStyle: { color: colors[0] },
+                },
+                // y轴数值的显示格式
+                axisLabel: { formatter: '{value} ml' }
+            },
+
+            //#region 
+            {
+                type: 'value',
+                name: '降水量',
+                min: 0,
+                max: 250,
+                position: 'right',
+                offset: 80,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: colors[1]
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value} ml'
+                }
+            },
+            {
+                type: 'value',
+                name: '温度',
+                min: 0,
+                max: 25,
+                position: 'left',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: colors[2]
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            }
+            //#endregion
+        ],
+        series: [
+            { name: '蒸发量', type: 'bar' },
+
+            // yAxisIndex y 轴的 index，在单个图表实例中存在多个 y轴的时候有用。
+            { name: '降水量', type: 'bar', yAxisIndex: 1 },
+            { name: '平均温度', type: 'line', yAxisIndex: 2 }
+        ],
+        dataset: {
+            dimensions: ['month', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            source: [
+                ['1月', 2.0, 2.6, 2.0,],
+                ['2月',4.9, 5.9, 2.2],
+                ['3月', 7.0, 9.0, 3.3],
+                ['4月', 23.2, 26.4, 4.5],
+                ['5月', 25.6, 28.7, 6.3],
+                ['6月', 76.7, 70.7, 10.2],
+                ['7月', 135.6, 175.6, 20.3],
+                ['8月', 162.2, 182.2, 23.4],
+                ['9月', 32.6, 48.7, 23.0],
+                ['10月', 20.0, 18.8, 16.5],
+                ['11月', 6.4, 6.0, 12.0],
+                ['12月', 3.3, 2.3, 6.2],
+            ]
+        }
+      }
+      myCharts.setOption(option)
+    </script>
+  </body>
+</html>

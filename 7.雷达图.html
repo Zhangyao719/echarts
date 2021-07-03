@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 200px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      /* 1. 各个维度的最大值 */
+      var dataMax = [
+        { name: '易用性', max: 100 },
+        { name: '功能', max: 100 },
+        { name: '拍照', max: 100 },
+        { name: '跑分', max: 100 },
+        { name: '续航', max: 100  }
+      ]
+
+      /* 2. 当前对象的数据 */
+      const phone1 = {
+        name: '华为手机1',
+        value: [80, 90, 80, 82, 90]
+      }
+      const phone2 = {
+        name: '中兴手机1',
+        value: [70, 82, 75, 70, 78]
+      }
+
+      const option = {
+        /* 3. 设置雷达属性*/
+        radar: { 
+          indicator: dataMax, // 指示器, 配置各个维度的最大值
+          shape: 'circle' // 配置雷达图最外层的边框图形(默认polygon)
+        },
+        series: [
+          {
+            type: 'radar',
+            data: [phone1, phone2],
+
+            /* 4.配置样式 */
+            label: { show: true }, // 设置标签样式
+            areaStyle: {}, // 内部区域面积
+          }
+        ]
+      }
+      myCharts.setOption(option)
+    </script>
+  </body>
+</html>

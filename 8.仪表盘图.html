@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 200px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      const option = {
+        series: [
+          {
+            type: 'gauge',
+            data: [
+              /* 1. 多个指针(每一个指针的值) */
+              {
+                value: 97,
+                itemStyle: {
+                  color: 'lightgreen',
+                }
+              },
+              {
+                value: 120,
+                itemStyle: {
+                  color: 'pink',
+                },
+              },
+            ],
+
+            /* 2. 仪表盘范围 */
+            min: 50,
+            max: 150
+          }
+        ]
+      }
+      myCharts.setOption(option)
+    </script>
+  </body>
+</html>

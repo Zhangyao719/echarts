@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./echarts.min.js"></script>
+    <style>
+      .echarts {
+        width: 1000px;
+        height: 600px;
+        margin: 200px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="echarts"></div>
+    <script>
+      const myCharts = echarts.init(document.querySelector('.echarts'))
+
+      const option = {
+        title: {
+          show: true,
+          text: '标题',
+          link: 'https://www.baidu.cn',
+          textStyle: {
+            color: 'red'
+          }
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          type: 'category', // 类目轴('value', 'category', 'time', 'log')
+          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+
+          /* 5.1 紧挨y轴边缘(类目轴中只有true/false, 刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间。 ) */
+          boundaryGap: false,
+
+          /* 11. 坐标轴分割段数*/
+          splitNumber: 13 // (默认5)
+        },
+        yAxis: {
+          type: 'value', // 数值轴, (会自动寻找在series中寻找x对应的data)
+
+          /* 5.2 非类目轴中是一个两个数值的数组, 分别表示数据最小值和最大值的延伸范围，可以直接设置数值或者相对的百分比，在设置 min 和 max 后无效。 */
+          boundaryGap: [0, '20%'],
+
+          /* 6. y轴从数据最小值开始(而不是从0开始, 用于数据相差不大时) */
+          scale: true,
+
+          /* 9. y轴刻度标签设置(默认value) */
+          axisLabel: { formatter: '{value}%' }, // value就是data里y轴对应的数据
+        },
+        series: [
+          {
+            name: '销量',
+            type: 'line', // 图表类型
+            data: [5, 20, 36, 10, 10, 20],
+
+            /* 1.标记图表中 某个范围的区域 */
+            markArea: {
+              data: [
+                [{ xAxis: '衬衫' }, { xAxis: '羊毛衫' }],
+                [{ xAxis: '裤子' }, { xAxis: '袜子' }],
+              ]
+            },
+
+            /* 2.曲线平滑效果(0-1 越来越圆润) */
+            smooth: true,  // true = 0.5
+
+            /* 3.线条样式 */
+            lineStyle: {
+              color: 'green', //线条颜色
+              type: 'dotted', // 线条类型: dashed dotted, (默认solid)
+              width: 2, //线条宽窄
+            },
+
+            /* 8. 图表标线(X轴上 平行于y轴的标线) */
+            markLine: {
+                symbol: ['circle', 'none'], // 标线两端的节点标志 ('circle', 'rect', 'roundRect', 'triangle'...等)
+                label: {show: false}, // 标线上的标签
+                data: [
+                    {xAxis: 1}, //x轴标线出现的坐标点
+                    {xAxis: 3},
+                    {xAxis: 5},
+                ]
+            },
+
+            /* 10. 交点标志(hover时, 标注线与y轴的交点标记) */
+            symbol: 'rect', // 标记的形状 ('circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none')
+            showSymbol: false, // 所有坐标点全部显示标记
+
+            /**
+             *  12. 数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率，默认关闭，也就是全部绘制不过滤数据点。 
+             *      1. 关闭动画
+             *      2. 开启sampling
+             *      3. 使用dataZoom
+             * */
+            sampling: 'lttb', // 'average', 'max', 'min', 'sum'
+
+            /* 4.曲线下方面积填充区域 */
+            areaStyle: {
+              color: '#c9c9c9',
+            },
+            stack: 'all',
+          },
+          {
+            type: 'line',
+            data: [15, 30, 31, 13, 11, 20],
+
+            /* 7. 数据堆叠(第二套数据是堆叠到第一套数据之上的) */
+            stack: 'all',
+            areaStyle: {
+              color: 'lightgreen',
+            }
+          }
+        ]
+      }
+      myCharts.setOption(option)
+    </script>
+  </body>
+</html>

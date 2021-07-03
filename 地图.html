@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./echarts.min.js"></script>
+  <style>
+    .echarts {
+      width: 1000px;
+      height: 600px;
+      margin: 200px auto 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="echarts"></div>
+  <script>
+    const myCharts = echarts.init(document.querySelector('.echarts'));
+
+    const option = {
+            title: {
+              show: true,
+              text: '标题',
+              link: 'https://www.baidu.cn',
+              textStyle: {
+                color: 'red'
+              }
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                type: 'category', // 类目轴
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {
+              type: 'value', // 数值轴, (会自动寻找在series中寻找x对应的data)
+            },
+            series: [{
+                name: '销量',
+                type: 'bar', // 图表类型
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+      myCharts.setOption(option);
+  </script>
+</body>
+</html>
