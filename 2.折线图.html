@@ -39,7 +39,7 @@
           boundaryGap: false,
 
           /* 11. 坐标轴分割段数*/
-          splitNumber: 13 // (默认5)
+          splitNumber: 13 // (默认5) 类目轴无效
         },
         yAxis: {
           type: 'value', // 数值轴, (会自动寻找在series中寻找x对应的data)
@@ -90,7 +90,7 @@
 
             /* 10. 交点标志(hover时, 标注线与y轴的交点标记) */
             symbol: 'rect', // 标记的形状 ('circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none')
-            showSymbol: false, // 所有坐标点全部显示标记
+            showSymbol: false, // false: 只在 tooltip hover 时 显示 symbol
 
             /**
              *  12. 数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率，默认关闭，也就是全部绘制不过滤数据点。 
