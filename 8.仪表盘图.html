@@ -22,8 +22,86 @@
         series: [
           {
             type: 'gauge',
+            center: ["50%", "75%"],
+            startAngle: 190,
+            endAngle: -10,
+            radius: "100%",
+            min: 50,
+            max: 150,
+            splitNumber: 12,
+            // 进度条
+            progress: {
+              show: true,
+              width: 15,
+              itemStyle: {
+                color: {
+                  type: "radial",
+                  x: 0,
+                  y: 1,
+                  r: 1.5,
+                  colorStops: [
+                    { offset: 0, color: "#5acbc8" },
+                    { offset: 0.3, color: "#a6d299" },
+                    { offset: 0.5, color: "#ecd96f" },
+                    { offset: 1, color: "#e040fb" }
+                  ]
+                }
+              }
+            },
+            // 刻度
+            axisTick: {
+              distance: -35,
+              splitNumber: 5,
+              lineStyle: {
+                color: "#999"
+              }
+            },
+            // 分隔线
+            splitLine: {
+              distance: -40,
+              length: 14,
+              lineStyle: {
+                width: 3,
+                color: "#999"
+              }
+            },
+            // 轴线(总进度条)
+            axisLine: {
+              lineStyle: {
+                width: 15,
+                // 需要颜色渐变可以参考: https://blog.csdn.net/qq_38974638/article/details/109008280
+                color: [[1, "#5d0fb0"]]
+              }
+            },
+            // 指针
+            pointer: { show: false },
+            // 指针固定点
+            anchor: { show: false },
+            axisLabel: { show: false },
+            title: { show: false },
+            detail: {
+              valueAnimation: true,
+              width: "60%",
+              lineHeight: 40,
+              borderRadius: 8,
+              offsetCenter: [0, "-15%"],
+              fontWeight: "bolder",
+              fontSize: 30,
+              rich: {
+                count: {
+                  fontSize: 20,
+                  color: "#91cc75"
+                },
+                title: {
+                  fontSize: 16,
+                  color: "#91cc75"
+                }
+              },
+              formatter: v => {
+                return `{count|${v}}\n{title|累计成交金额}`;
+              }
+            },
             data: [
-              /* 1. 多个指针(每一个指针的值) */
               {
                 value: 97,
                 itemStyle: {
@@ -37,10 +115,6 @@
                 },
               },
             ],
-
-            /* 2. 仪表盘范围 */
-            min: 50,
-            max: 150
           }
         ]
       }
